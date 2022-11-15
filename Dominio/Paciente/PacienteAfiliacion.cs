@@ -1,4 +1,4 @@
-﻿namespace Dominio.Pacientes
+﻿namespace Dominio.Paciente
 {
     public class PacienteAfiliacion
     {
@@ -9,6 +9,6 @@
         public long RegimenId { get; set; }
         public long AseguradoraId { get; set; }
         public string? VcOtraAseguradora { get; set; }
-        public Pacientes? Pacientes { get; set; }
+        public Paciente? Paciente { get; set; }
     }
 }

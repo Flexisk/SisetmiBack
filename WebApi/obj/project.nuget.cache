@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "YlaaIz/APhesWlcfRt9awLmjQf2m+q+tYikbHynuTTJJhTFRwHtwI97cDSCmOo54fFTL1cxnfhybA5I/8q/jBw==",
+  "dgSpecHash": "AG/0Rv81LAtmaQ8AIEX2MujKENzc6Py5WbS7uFRzWGNAgSCEgB4kWhtVpbAThAaJcBDhEDEMdJsuKzusFS3Idg==",
   "success": true,
   "projectFilePath": "C:\\Users\\fgarcia\\Documents\\RepositoriosSISETMI\\SisetmiBack\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\fgarcia\\.nuget\\packages\\dotnetenv\\2.3.0\\dotnetenv.2.3.0.nupkg.sha512",
     "C:\\Users\\fgarcia\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\fgarcia\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\fgarcia\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
@@ -102,6 +103,7 @@
     "C:\\Users\\fgarcia\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\fgarcia\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\fgarcia\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\fgarcia\\.nuget\\packages\\sprache\\2.3.1\\sprache.2.3.1.nupkg.sha512",
     "C:\\Users\\fgarcia\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\fgarcia\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "C:\\Users\\fgarcia\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",

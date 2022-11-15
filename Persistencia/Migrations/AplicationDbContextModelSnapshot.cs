@@ -22,7 +22,55 @@ namespace Persistencia.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Dominio.Pacientes.PacienteAfiliacion", b =>
+            modelBuilder.Entity("Dominio.Paciente.Paciente", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DtFechaNacimineto")
+                        .HasMaxLength(50)
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("Nacionalidad")
+                        .HasMaxLength(100)
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TipoDocumentoId")
+                        .HasMaxLength(20)
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("VcDocumento")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("VcPrimerApellido")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("VcPrimerNombre")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("VcSegundoApellido")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("VcSegundoNombre")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Paciente", (string)null);
+                });
+
+            modelBuilder.Entity("Dominio.Paciente.PacienteAfiliacion", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,7 +103,7 @@ namespace Persistencia.Migrations
                     b.ToTable("PacienteAfiliacion");
                 });
 
-            modelBuilder.Entity("Dominio.Pacientes.PacienteCaso", b =>
+            modelBuilder.Entity("Dominio.Paciente.PacienteCaso", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,7 +124,6 @@ namespace Persistencia.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<long>("PacienteId")
-                        .HasMaxLength(20)
                         .HasColumnType("bigint");
 
                     b.Property<int>("VcNumeroCaso")
@@ -90,7 +137,7 @@ namespace Persistencia.Migrations
                     b.ToTable("PacienteCaso", (string)null);
                 });
 
-            modelBuilder.Entity("Dominio.Pacientes.PacienteContacto", b =>
+            modelBuilder.Entity("Dominio.Paciente.PacienteContacto", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,7 +160,7 @@ namespace Persistencia.Migrations
                     b.Property<long>("PacienteId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("PaidId")
+                    b.Property<string>("PaisId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UpzId")
@@ -141,7 +188,7 @@ namespace Persistencia.Migrations
                     b.ToTable("PacienteContacto");
                 });
 
-            modelBuilder.Entity("Dominio.Pacientes.PacienteDiagnostico", b =>
+            modelBuilder.Entity("Dominio.Paciente.PacienteDiagnostico", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -214,7 +261,7 @@ namespace Persistencia.Migrations
                     b.ToTable("PacienteDiagnostico", (string)null);
                 });
 
-            modelBuilder.Entity("Dominio.Pacientes.PacienteDiagnosticoPruebaTreponemica", b =>
+            modelBuilder.Entity("Dominio.Paciente.PacienteDiagnosticoPruebaTreponemica", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -241,130 +288,80 @@ namespace Persistencia.Migrations
                     b.ToTable("PacienteDiagnosticoPruebaTreponemica");
                 });
 
-            modelBuilder.Entity("Dominio.Pacientes.Pacientes", b =>
+            modelBuilder.Entity("Dominio.Paciente.PacienteAfiliacion", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("DtFechaNacimineto")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Nacionalidad")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("TipoDocumentoId")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("VcDocumento")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("VcPrimerApellido")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("VcPrimerNombre")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("VcSegundoApellido")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("VcSegundoNombre")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Pacientes", (string)null);
-                });
-
-            modelBuilder.Entity("Dominio.Pacientes.PacienteAfiliacion", b =>
-                {
-                    b.HasOne("Dominio.Pacientes.Pacientes", "Pacientes")
+                    b.HasOne("Dominio.Paciente.Paciente", "Paciente")
                         .WithMany("PacienteAfiliacion")
                         .HasForeignKey("PacienteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_Pacientes_Afiliacion");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Pacientes");
+                    b.Navigation("Paciente");
                 });
 
-            modelBuilder.Entity("Dominio.Pacientes.PacienteCaso", b =>
+            modelBuilder.Entity("Dominio.Paciente.PacienteCaso", b =>
                 {
-                    b.HasOne("Dominio.Pacientes.Pacientes", "pacientes")
+                    b.HasOne("Dominio.Paciente.Paciente", "Paciente")
                         .WithMany("PacienteCaso")
                         .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Pacientes_Caso");
 
-                    b.Navigation("pacientes");
+                    b.Navigation("Paciente");
                 });
 
-            modelBuilder.Entity("Dominio.Pacientes.PacienteContacto", b =>
+            modelBuilder.Entity("Dominio.Paciente.PacienteContacto", b =>
                 {
-                    b.HasOne("Dominio.Pacientes.Pacientes", "Pacientes")
+                    b.HasOne("Dominio.Paciente.Paciente", "Paciente")
                         .WithMany("PacienteContacto")
                         .HasForeignKey("PacienteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_Pacientes_Contacto");
-
-                    b.Navigation("Pacientes");
-                });
-
-            modelBuilder.Entity("Dominio.Pacientes.PacienteDiagnostico", b =>
-                {
-                    b.HasOne("Dominio.Pacientes.PacienteCaso", "pacientecaso")
-                        .WithMany("pacientediagnostico")
-                        .HasForeignKey("PacienteCasoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("pacientecaso");
+                    b.Navigation("Paciente");
                 });
 
-            modelBuilder.Entity("Dominio.Pacientes.PacienteDiagnosticoPruebaTreponemica", b =>
+            modelBuilder.Entity("Dominio.Paciente.PacienteDiagnostico", b =>
                 {
-                    b.HasOne("Dominio.Pacientes.PacienteDiagnostico", "pacientediagnostico")
-                        .WithMany("pacientediagnosticopruebatreponemica")
-                        .HasForeignKey("PacienteDiagnosticoId")
+                    b.HasOne("Dominio.Paciente.PacienteCaso", "PacienteCaso")
+                        .WithMany("PacienteDiagnostico")
+                        .HasForeignKey("PacienteCasoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("FK_Pacientes_Diagnostico");
+                        .HasConstraintName("FK_Paciente_Diagnostico");
 
-                    b.Navigation("pacientediagnostico");
+                    b.Navigation("PacienteCaso");
                 });
 
-            modelBuilder.Entity("Dominio.Pacientes.PacienteCaso", b =>
+            modelBuilder.Entity("Dominio.Paciente.PacienteDiagnosticoPruebaTreponemica", b =>
                 {
-                    b.Navigation("pacientediagnostico");
+                    b.HasOne("Dominio.Paciente.PacienteDiagnostico", "PacienteDiagnostico")
+                        .WithMany("PacienteDiagnosticoPruebaTreponemica")
+                        .HasForeignKey("PacienteDiagnosticoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PacienteDiagnostico");
                 });
 
-            modelBuilder.Entity("Dominio.Pacientes.PacienteDiagnostico", b =>
-                {
-                    b.Navigation("pacientediagnosticopruebatreponemica");
-                });
-
-            modelBuilder.Entity("Dominio.Pacientes.Pacientes", b =>
+            modelBuilder.Entity("Dominio.Paciente.Paciente", b =>
                 {
                     b.Navigation("PacienteAfiliacion");
 
                     b.Navigation("PacienteCaso");
 
                     b.Navigation("PacienteContacto");
+                });
+
+            modelBuilder.Entity("Dominio.Paciente.PacienteCaso", b =>
+                {
+                    b.Navigation("PacienteDiagnostico");
+                });
+
+            modelBuilder.Entity("Dominio.Paciente.PacienteDiagnostico", b =>
+                {
+                    b.Navigation("PacienteDiagnosticoPruebaTreponemica");
                 });
 #pragma warning restore 612, 618
         }

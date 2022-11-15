@@ -1,4 +1,4 @@
-﻿using Dominio.Pacientes;
+﻿using Dominio.Paciente;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

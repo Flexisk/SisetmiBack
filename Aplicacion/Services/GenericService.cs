@@ -1,17 +1,19 @@
 using System.Linq.Expressions;
-using Dominio.Pacientes;
+using Dominio.Paciente;
 using Persistencia.Repository;
+using Persistencia.Context;
 
 namespace Aplicacion.Services
 {
     public interface IGenericService<T> where T : class
     {
-         Task<List<T>> GetAsync();
+        Task<List<T>> GetAsync();
 
+        Task<T> FindAsync(long Id);
         Task<List<T>> GetAsync(Expression<Func<T, bool>> whereCondition = null,
                            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
                            string includeProperties = "");
-        Task<bool> CreateRangeAsync(IEnumerable<T> lista);
+        //Task<bool> CreateRangeAsync(IEnumerable<T> lista);
 
         Task<bool> CreateAsync(T entity);
 
@@ -32,16 +34,22 @@ namespace Aplicacion.Services
         {
             _genericRepository = genericRepository;
         }
+
+        public async Task<T> FindAsync(long Id)
+        {
+            return await _genericRepository.FindAsync(Id);
+        }
+
         public async Task<bool> CreateAsync(T entity)
         {
             return await _genericRepository.CreateAsync(entity);
         }
 
 
-        public async Task<bool> CreateRangeAsync(IEnumerable<T> lista)
-        {
-            return await _genericRepository.CreateRangeAsync(lista);
-        }
+        //public async Task<bool> CreateRangeAsync(IEnumerable<T> lista)
+        //{
+        //    return await _genericRepository.CreateRangeAsync(lista);
+        //}
 
         public async Task<bool> DeleteAsync(long id)
         {

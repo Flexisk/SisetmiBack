@@ -1,6 +1,8 @@
+using Aplicacion.Services;
 using Microsoft.EntityFrameworkCore;
 using Persistencia.Context;
-
+using Persistencia.Repository;
+using DotNetEnv;
 
 var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -10,11 +12,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+DotNetEnv.Env.Load();
 
 builder.Services.AddDbContext<AplicationDbContext>(options =>
-                       options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")),
+                       options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING")),
             ServiceLifetime.Transient);
 
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 
 builder.Services.AddCors(opt => {
 opt.AddPolicy(name: myAllowSpecificOrigins,

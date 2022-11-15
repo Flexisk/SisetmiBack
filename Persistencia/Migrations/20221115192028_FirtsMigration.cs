@@ -5,28 +5,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistencia.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class FirtsMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Pacientes",
+                name: "Paciente",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TipoDocumentoId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    TipoDocumentoId = table.Column<long>(type: "bigint", maxLength: 20, nullable: false),
                     VcDocumento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     VcPrimerNombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     VcSegundoNombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     VcPrimerApellido = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     VcSegundoApellido = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    Nacionalidad = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DtFechaNacimineto = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Nacionalidad = table.Column<long>(type: "bigint", maxLength: 100, nullable: false),
+                    DtFechaNacimineto = table.Column<DateTime>(type: "datetime2", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pacientes", x => x.Id);
+                    table.PrimaryKey("PK_Paciente", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,11 +46,11 @@ namespace Persistencia.Migrations
                 {
                     table.PrimaryKey("PK_PacienteAfiliacion", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pacientes_Afiliacion",
+                        name: "FK_PacienteAfiliacion_Paciente_PacienteId",
                         column: x => x.PacienteId,
-                        principalTable: "Pacientes",
+                        principalTable: "Paciente",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,7 +59,7 @@ namespace Persistencia.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PacienteId = table.Column<long>(type: "bigint", maxLength: 20, nullable: false),
+                    PacienteId = table.Column<long>(type: "bigint", nullable: false),
                     VcNumeroCaso = table.Column<int>(type: "int", maxLength: 20, nullable: false),
                     BComfirmadoSifilisGestacional = table.Column<bool>(type: "bit", maxLength: 20, nullable: false),
                     ClasificacionSifilis = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
@@ -69,9 +69,9 @@ namespace Persistencia.Migrations
                 {
                     table.PrimaryKey("PK_PacienteCaso", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PacienteCaso_Pacientes_PacienteId",
+                        name: "FK_Pacientes_Caso",
                         column: x => x.PacienteId,
-                        principalTable: "Pacientes",
+                        principalTable: "Paciente",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -85,7 +85,7 @@ namespace Persistencia.Migrations
                     PacienteId = table.Column<long>(type: "bigint", nullable: false),
                     DtFechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioId = table.Column<long>(type: "bigint", nullable: false),
-                    PaidId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaisId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartamentoId = table.Column<long>(type: "bigint", nullable: false),
                     LocalidadId = table.Column<long>(type: "bigint", nullable: false),
                     UpzId = table.Column<long>(type: "bigint", nullable: false),
@@ -99,11 +99,11 @@ namespace Persistencia.Migrations
                 {
                     table.PrimaryKey("PK_PacienteContacto", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pacientes_Contacto",
+                        name: "FK_PacienteContacto_Paciente_PacienteId",
                         column: x => x.PacienteId,
-                        principalTable: "Pacientes",
+                        principalTable: "Paciente",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,7 +132,7 @@ namespace Persistencia.Migrations
                 {
                     table.PrimaryKey("PK_PacienteDiagnostico", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PacienteDiagnostico_PacienteCaso_PacienteCasoId",
+                        name: "FK_Paciente_Diagnostico",
                         column: x => x.PacienteCasoId,
                         principalTable: "PacienteCaso",
                         principalColumn: "Id",
@@ -154,11 +154,11 @@ namespace Persistencia.Migrations
                 {
                     table.PrimaryKey("PK_PacienteDiagnosticoPruebaTreponemica", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pacientes_Diagnostico",
+                        name: "FK_PacienteDiagnosticoPruebaTreponemica_PacienteDiagnostico_PacienteDiagnosticoId",
                         column: x => x.PacienteDiagnosticoId,
                         principalTable: "PacienteDiagnostico",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -205,7 +205,7 @@ namespace Persistencia.Migrations
                 name: "PacienteCaso");
 
             migrationBuilder.DropTable(
-                name: "Pacientes");
+                name: "Paciente");
         }
     }
 }

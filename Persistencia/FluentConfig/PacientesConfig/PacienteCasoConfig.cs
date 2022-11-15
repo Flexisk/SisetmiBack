@@ -1,4 +1,4 @@
-﻿using Dominio.Pacientes;
+﻿using Dominio.Paciente;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -17,7 +17,7 @@ namespace Persistencia.FluentConfig.PacientesConfig
             entity.HasKey(p => p.Id);
 
             entity
-               .HasOne(p => p.Pacientes)
+               .HasOne(p => p.Paciente)
                .WithMany(p => p.PacienteCaso)
                .HasForeignKey(p => p.PacienteId)
                .HasConstraintName("FK_Pacientes_Caso")

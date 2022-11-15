@@ -1,11 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Persistencia.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Persistencia.Context;
+
 
 namespace Persistencia.Repository
 {
@@ -13,31 +9,34 @@ namespace Persistencia.Repository
     {
         Task<List<T>> GetAsync();
 
+        Task<T> FindAsync(long Id);
         Task<List<T>> GetAsync(Expression<Func<T, bool>> whereCondition = null,
                            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
                            string includeProperties = "");
-        Task<bool> CreateAsync(T entity);
-
-        Task<bool> UpdateAsync(long id, T entity);
+        Task<bool> CreateAsync(T entity);    
+        
+        Task<bool> UpdateAsync(long id,T entity);
 
         Task<bool> DeleteAsync(long id);
 
         bool ExistsAsync();
 
-        Task<bool> CreateRangeAsync(IEnumerable<T> Lista);
+        //Task<bool> CreateRangeAsync(IEnumerable<T> Lista);
+
+
     }
 
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-
+        
 
         protected readonly AplicationDbContext _context;
 
-
+  
 
         public GenericRepository(AplicationDbContext context)
         {
-
+            
             _context = context;
         }
 
@@ -47,10 +46,23 @@ namespace Persistencia.Repository
             return await _context.Set<T>().ToListAsync();
         }
 
+
+        public async Task<T> FindAsync(long Id)
+        {
+            T entity;
+            entity = await _context.Set<T>().FindAsync(Id);
+            if(entity != null)
+            {
+                _context.Entry(entity).State = EntityState.Detached;
+            }
+            return entity;
+        }
+
         public async Task<List<T>> GetAsync(Expression<Func<T, bool>> whereCondition = null,
                                   Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
                                   string includeProperties = "")
         {
+                       
             IQueryable<T> query = _context.Set<T>();
 
             if (whereCondition != null)
@@ -82,76 +94,83 @@ namespace Persistencia.Repository
             {
                 var save = await _context.Set<T>().AddAsync(entity);
 
-                if (save != null)
+                if (save != null)                                  
                     created = true;
 
                 await _context.SaveChangesAsync();
-
+                
             }
             catch (Exception ex)
             {
                 throw;
 
-            }
+            }                        
             return created;
         }
 
 
-        public async Task<bool> CreateRangeAsync(IEnumerable<T> lista)
-        {
-            bool created = false;
-            try
-            {
-                if (lista != null)
-                {
-                    await _context.Set<T>().AddRangeAsync(lista);
-                    created = true;
-                    _context.SaveChangesAsync();  // SE RETIRA EL AWAIT
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return created;
-        }
+        //public async Task<bool> CreateRangeAsync(IEnumerable<T> lista)
+        //{
+        //    bool created = false;
+        //    try
+        //    {
+        //        if (lista != null)
+        //        {
+        //            await _context.Set<T>().AddRangeAsync(lista);
+        //            created = true;
+        //            _context.SaveChangesAsync();  // SE RETIRA EL AWAIT
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //    return created;
+        //}
 
 
-        public async Task<bool> UpdateAsync(long id, T entity)
-        {
+        public async Task<bool> UpdateAsync(long id,T entity)
+        { 
             bool edited = false;
-            _context.Entry(entity).State = EntityState.Modified;
+            
+            
 
             try
             {
+                var entityDB = await FindAsync(id);
+                if (entityDB == null)
+                    return edited;
+
+                _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
                 edited = true;
             }
             catch (Exception ex)
             {
                 throw;
-
-            }
-            return edited;
+        
+            }   
+            return edited;         
         }
 
-        public async Task<bool> DeleteAsync(long id)
-        {
+         public async Task<bool> DeleteAsync(long id)
+        { 
             bool deleted = false;
             try
             {
-                var entity = await _context.Set<T>().FindAsync(id);
-                if (entity == null)
+
+                var entityDB = await FindAsync(id);
+                if (entityDB == null)
                     return deleted;
 
 
-                var removeEntity = _context.Set<T>().Remove(entity);
+                var removeEntity = _context.Set<T>().Remove(entityDB);
                 if (removeEntity != null)
                 {
                     deleted = true;
                 }
-                await _context.SaveChangesAsync();
-            }
+                await  _context.SaveChangesAsync();
+            } 
             catch (Exception)
             {
                 throw;
@@ -166,9 +185,8 @@ namespace Persistencia.Repository
             if (_context.Set<T>() == null)
             {
                 existe = false;
-            }
-            return existe;
+            } 
+            return existe;        
         }
     }
-
 }

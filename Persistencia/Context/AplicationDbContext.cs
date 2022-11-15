@@ -1,5 +1,5 @@
 ﻿
-using Dominio.Pacientes;
+using Dominio.Paciente;
 using Microsoft.EntityFrameworkCore;
 using Persistencia.FluentConfig.PacientesConfig;
 
@@ -16,13 +16,13 @@ namespace Persistencia.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            new PacienteConfig(modelBuilder.Entity<Pacientes>());
+            new PacienteConfig(modelBuilder.Entity<Paciente>());
             new PacienteCasoConfig(modelBuilder.Entity<PacienteCaso>());
             new PacienteDiagnosticoConfig(modelBuilder.Entity<PacienteDiagnostico>());
 
         }
 
-        public DbSet<Pacientes> Pacientes { get; set; }
+        public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<PacienteAfiliacion> PacienteAfiliacion { get; set; }
         public DbSet<PacienteContacto> PacienteContacto { get; set; }
         public DbSet<PacienteDiagnostico> PacienteDiagnostico { get; set; }

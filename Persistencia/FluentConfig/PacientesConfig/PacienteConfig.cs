@@ -1,4 +1,4 @@
-﻿using Dominio.Pacientes;
+﻿using Dominio.Paciente;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -7,9 +7,9 @@ namespace Persistencia.FluentConfig.PacientesConfig
 {
     public class PacienteConfig
     {
-        public PacienteConfig(EntityTypeBuilder<Pacientes> entity)
+        public PacienteConfig(EntityTypeBuilder<Paciente> entity)
         {
-            entity.ToTable("Pacientes");
+            entity.ToTable("Paciente");
             entity.HasKey(p => p.Id);
           
             entity.Property(p => p.TipoDocumentoId).IsRequired().HasMaxLength(20);

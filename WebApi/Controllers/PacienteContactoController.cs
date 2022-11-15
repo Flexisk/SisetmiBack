@@ -1,6 +1,6 @@
 ﻿using Aplicacion.ManejadorErrores;
 using Aplicacion.Services;
-using Dominio.Pacientes;
+using Dominio.Paciente;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

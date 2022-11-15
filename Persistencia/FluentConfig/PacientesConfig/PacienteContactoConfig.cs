@@ -1,4 +1,4 @@
-﻿using Dominio.Pacientes;
+﻿using Dominio.Paciente;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -17,10 +17,10 @@ namespace Persistencia.FluentConfig.PacientesConfig
                 .HasKey(p => p.Id);
 
             entity
-                .HasOne(p => p.Pacientes)
+                .HasOne(p => p.Paciente)
                 .WithMany(p => p.PacienteContacto)
                 .HasForeignKey(p => p.PacienteId)
-                .HasConstraintName("FK_Pacientes_Contacto")
+                .HasConstraintName("FK_Paciente_Contacto")
                 .OnDelete(DeleteBehavior.Restrict);
 
             entity.Property(p => p.DtFechaRegistro).IsRequired().HasMaxLength(20);

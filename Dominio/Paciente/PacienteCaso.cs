@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dominio.Pacientes
+namespace Dominio.Paciente
 {
     public class PacienteCaso
     {
@@ -15,7 +15,7 @@ namespace Dominio.Pacientes
         public string? ClasificacionSifilis { get; set; }
         public DateTime DtFecha { get; set; }
 
-        public Pacientes? Pacientes { get; set; }
+        public Paciente? Paciente { get; set; }
         public virtual ICollection<PacienteDiagnostico>? PacienteDiagnostico { get; set; }
 
     }

@@ -1,5 +1,5 @@
 ﻿
-namespace Dominio.Pacientes
+namespace Dominio.Paciente
 {
     public class PacienteContacto
     {
@@ -17,7 +17,7 @@ namespace Dominio.Pacientes
         public int VcTelefono1 { get; set; }
         public int VcTelefono2 { get; set; }
 
-        public Pacientes? Pacientes { get; set; }
+        public Paciente? Paciente { get; set; }
 
     }
 }

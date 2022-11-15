@@ -264,7 +264,6 @@ C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\bin\Debug\net6
 C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\bin\Debug\net6.0\Aplicacion.pdb
 C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\bin\Debug\net6.0\Dominio.pdb
 C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\bin\Debug\net6.0\Persistencia.pdb
-C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\obj\Debug\net6.0\WebApi.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\obj\Debug\net6.0\scopedcss\bundle\WebApi.styles.css
@@ -274,3 +273,6 @@ C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\obj\Debug\net6
 C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\obj\Debug\net6.0\WebApi.pdb
 C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\obj\Debug\net6.0\WebApi.genruntimeconfig.cache
 C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\obj\Debug\net6.0\ref\WebApi.dll
+C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\bin\Debug\net6.0\DotNetEnv.dll
+C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\bin\Debug\net6.0\Sprache.dll
+C:\Users\fgarcia\Documents\RepositoriosSISETMI\SisetmiBack\WebApi\obj\Debug\net6.0\WebApi.MvcApplicationPartsAssemblyInfo.cs
