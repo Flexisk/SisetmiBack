@@ -20,7 +20,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PacienteContacto>>> GetPacienteContacto()
         {
-            if (!_service.ExistsAsync())
+            if (!await _service.ExistsAsync())
             {
                 throw new ExcepcionError(HttpStatusCode.NoContent, "No Existe", "No se encontraron PacienteContacto en Base de Datos");
             }
@@ -30,7 +30,7 @@ namespace WebApi.Controllers
         [HttpGet("{Id}")]
         public async Task<ActionResult<PacienteContacto>> GetPacienteContacto(long Id)
         {
-            if (!_service.ExistsAsync())
+            if (!await _service.ExistsAsync())
             {
                 throw new ExcepcionError(HttpStatusCode.NotFound, "No Existe", "No se encontraron PacienteContacto con este Id");
             }
@@ -45,7 +45,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<PacienteContacto>> PostPacienteContacto(PacienteContacto pacienteContacto)
         {
-            if (!_service.ExistsAsync())
+            if (!await _service.ExistsAsync())
             {
                 throw new ExcepcionError(HttpStatusCode.NotFound, "No Modificado", "No fue posible Modificar PacienteContacto");
             }

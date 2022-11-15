@@ -19,7 +19,7 @@ namespace Persistencia.Repository
 
         Task<bool> DeleteAsync(long id);
 
-        bool ExistsAsync();
+        Task<bool> ExistsAsync(Expression<Func<T, bool>> whereCondition = null);
 
         //Task<bool> CreateRangeAsync(IEnumerable<T> Lista);
 
@@ -109,26 +109,6 @@ namespace Persistencia.Repository
         }
 
 
-        //public async Task<bool> CreateRangeAsync(IEnumerable<T> lista)
-        //{
-        //    bool created = false;
-        //    try
-        //    {
-        //        if (lista != null)
-        //        {
-        //            await _context.Set<T>().AddRangeAsync(lista);
-        //            created = true;
-        //            _context.SaveChangesAsync();  // SE RETIRA EL AWAIT
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //    return created;
-        //}
-
-
         public async Task<bool> UpdateAsync(long id,T entity)
         { 
             bool edited = false;
@@ -179,14 +159,11 @@ namespace Persistencia.Repository
             return deleted;
         }
 
-        public bool ExistsAsync()
+        public async Task<bool> ExistsAsync(Expression<Func<T, bool>> whereCondition = null)
         {
-            bool existe = true;
-            if (_context.Set<T>() == null)
-            {
-                existe = false;
-            } 
-            return existe;        
+            //p=>p.Id != null
+            var count = _context.Set<T>().Where(whereCondition).Count();
+            return count > 0;        
         }
     }
 }

@@ -1,8 +1,6 @@
 using System.Linq.Expressions;
 using Dominio.Paciente;
 using Persistencia.Repository;
-using Persistencia.Context;
-
 namespace Aplicacion.Services
 {
     public interface IGenericService<T> where T : class
@@ -21,7 +19,7 @@ namespace Aplicacion.Services
 
         Task<bool> DeleteAsync(long id);
 
-        bool        ExistsAsync();
+        Task<bool> ExistsAsync(Expression<Func<T, bool>> whereCondition = null);
 
 
     }
@@ -73,9 +71,9 @@ namespace Aplicacion.Services
             return await _genericRepository.UpdateAsync(id,entity);
         }
 
-        public bool ExistsAsync()
+        public Task<bool> ExistsAsync(Expression<Func<T, bool>> whereCondition = null)
         {
-            return _genericRepository.ExistsAsync();
+            return _genericRepository.ExistsAsync(whereCondition);
         }
     }    
 

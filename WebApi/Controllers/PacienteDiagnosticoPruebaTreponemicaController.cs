@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PacienteDiagnosticoPruebaTreponemica>>> GetPacienteDiagnosticoPruebaTreponemica()
         {
-            if (!_service.ExistsAsync())
+            if (!await _service.ExistsAsync())
             {
                 throw new ExcepcionError(HttpStatusCode.NoContent, "No Existe", "No se encontraron PacienteDiagnosticoPruebaTreponemica en Base de Datos");
             }
@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         [HttpGet("{Id}")]
         public async Task<ActionResult<PacienteDiagnosticoPruebaTreponemica>> GetPacienteDiagnosticoPruebaTreponemica(long Id)
         {
-            if (!_service.ExistsAsync())
+            if (!await _service.ExistsAsync())
             {
                 throw new ExcepcionError(HttpStatusCode.NotFound, "No Existe", "No se encontraron PacienteDiagnosticoPruebaTreponemica con este Id");
             }
@@ -46,7 +46,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<PacienteDiagnosticoPruebaTreponemica>> PostPacienteDiagnosticoPruebaTreponemica(PacienteDiagnosticoPruebaTreponemica pacienteDiagnosticoPruebaTreponemica)
         {
-            if (!_service.ExistsAsync())
+            if (!await _service.ExistsAsync())
             {
                 throw new ExcepcionError(HttpStatusCode.NotFound, "No Modificado", "No fue posible Modificar PacienteDiagnosticoPruebaTreponemica");
             }
