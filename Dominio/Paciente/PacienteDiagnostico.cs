@@ -25,7 +25,7 @@ namespace Dominio.Paciente
         public DateTime DtResultadoPruebaNoTreponemica { get; set; }
         public long ModificacionDefinicionCasoId { get; set; }
 
-        public virtual ICollection<PacienteDiagnosticoPruebaTreponemica> PacienteDiagnosticoPruebaTreponemica { get; set; }
+        public virtual ICollection<PacienteDiagnosticoPruebaTreponemica>? PacienteDiagnosticoPruebaTreponemica { get; set; }
 
         public PacienteCaso? PacienteCaso { get; set; }
 

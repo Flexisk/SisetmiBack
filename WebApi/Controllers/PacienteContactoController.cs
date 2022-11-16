@@ -4,6 +4,7 @@ using Dominio.Paciente;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using WebApi.Responses;
 
 namespace WebApi.Controllers
 {
@@ -20,69 +21,130 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PacienteContacto>>> GetPacienteContacto()
         {
-            if (!await _service.ExistsAsync())
+            var response = new { Titulo = "Bien Hecho!", Mensaje = "Se encontraron contacto de paciente", Codigo = HttpStatusCode.OK };
+            IEnumerable<PacienteContacto> PacientescontactoModel = null;
+            if (!await _service.ExistsAsync(e => e.Id > 0))
             {
-                throw new ExcepcionError(HttpStatusCode.NoContent, "No Existe", "No se encontraron PacienteContacto en Base de Datos");
+                response = new { Titulo = "Algo salio mal", Mensaje = "No existe contacto de paciente", Codigo = HttpStatusCode.Accepted };
             }
-            return await _service.GetAsync();
+            else
+            {
+                PacientescontactoModel = await _service.GetAsync();
+            }
+
+
+            var listModelResponse = new ListModelResponse<PacienteContacto>(response.Codigo, response.Titulo, response.Mensaje, PacientescontactoModel);
+            return StatusCode((int)listModelResponse.Codigo, listModelResponse);
         }
 
         [HttpGet("{Id}")]
         public async Task<ActionResult<PacienteContacto>> GetPacienteContacto(long Id)
         {
-            if (!await _service.ExistsAsync())
+            var response = new { Titulo = "", Mensaje = "", Codigo = HttpStatusCode.Accepted };
+            PacienteContacto PacientescontactoModel = null;
+            if (!await _service.ExistsAsync(e => e.Id > 0))
             {
-                throw new ExcepcionError(HttpStatusCode.NotFound, "No Existe", "No se encontraron PacienteContacto con este Id");
+
+                response = new { Titulo = "Algo salio mal", Mensaje = "No existen contacto de paciente", Codigo = HttpStatusCode.BadRequest };
+
             }
-            var pacienteContacto = await _service.GetAsync(e => e.Id == Id, e => e.OrderBy(e => e.Id), "");
-            if (pacienteContacto.Count < 1)
+
+            var Pacientecontacto = await _service.GetAsync(e => e.Id == Id, e => e.OrderBy(e => e.Id), "");
+
+            if (Pacientecontacto.Count < 1)
             {
-                throw new ExcepcionError(HttpStatusCode.NotFound, "No Existe", "No se encontraron PacienteContacto con este Id");
+                response = new { Titulo = "Algo salio mal", Mensaje = "No existe contacto de paciente con id " + Id, Codigo = HttpStatusCode.NotFound };
             }
-            return Created("ObtenerPacienteContacto", new { Codigo = HttpStatusCode.OK, Titulo = "OK", Mensaje = "Se obtuvo Id Solicitado", pacienteContacto = pacienteContacto });
+            else
+            {
+                PacientescontactoModel = Pacientecontacto.First();
+                response = new { Titulo = "Bien Hecho!", Mensaje = "Se obtuvo el contacto del paciente con el Id solicitado", Codigo = HttpStatusCode.OK };
+            }
+
+
+            var modelResponse = new ModelResponse<PacienteContacto>(response.Codigo, response.Titulo, response.Mensaje, PacientescontactoModel);
+            return StatusCode((int)modelResponse.Codigo, modelResponse);
         }
 
         [HttpPost]
         public async Task<ActionResult<PacienteContacto>> PostPacienteContacto(PacienteContacto pacienteContacto)
         {
-            if (!await _service.ExistsAsync())
+            var response = new { Titulo = "Bien Hecho!", Mensaje = "Contacto de paciente creado de forma correcta", Codigo = HttpStatusCode.Created };
+            PacienteContacto PacientecontactoModel = null;
+
+
+            bool guardo = await _service.CreateAsync(pacienteContacto);
+            if (!guardo)
             {
-                throw new ExcepcionError(HttpStatusCode.NotFound, "No Modificado", "No fue posible Modificar PacienteContacto");
+                response = new { Titulo = "Algo salio mal", Mensaje = "No se puedo guardar el contacto de paciente", Codigo = HttpStatusCode.BadRequest };
+            }
+            else
+            {
+                PacientecontactoModel = pacienteContacto;
             }
 
-            await _service.CreateAsync(pacienteContacto);
 
-            return Created("CrearPacienteContacto", new { Codigo = HttpStatusCode.OK, Titulo = "OK", Mensaje = "Se Creo el PacienteContacto con Exito", pacienteContacto = pacienteContacto });
+            var modelResponse = new ModelResponse<PacienteContacto>(response.Codigo, response.Titulo, response.Mensaje, PacientecontactoModel);
+            return StatusCode((int)modelResponse.Codigo, modelResponse);
         }
 
         [HttpPut("{Id}")]
         public async Task<IActionResult> PutPacienteContacto(long Id, PacienteContacto pacienteContacto)
         {
+            var response = new { Titulo = "Bien Hecho!", Mensaje = "Se actualizó el contacto del paciente de forma correcta", Codigo = HttpStatusCode.OK };
+
             if (Id != pacienteContacto.Id)
             {
-                throw new ExcepcionError(HttpStatusCode.NotFound, "No Existe", "No fue posible encontrar el Id del PacienteContacto");
+                response = new { Titulo = "Algo salió mal!", Mensaje = "El id de contacto de paciente no corresponde con el del modelo", Codigo = HttpStatusCode.BadRequest };
             }
-
-            bool updated = await _service.UpdateAsync(Id, pacienteContacto);
-
-            if (!updated)
+            else if (pacienteContacto.Id < 1)
             {
-                throw new ExcepcionError(HttpStatusCode.NotModified, "No Modificado", "No se pudo Actualizar el PacienteContacto");
+                response = new { Titulo = "Algo salió mal!", Mensaje = "El modelo de contacto paciente no tiene el campo Id ", Codigo = HttpStatusCode.BadRequest };
             }
-            return Created("ActualizarPacienteContacto", new { Codigo = HttpStatusCode.OK, Titulo = "OK", Mensaje = "Se Actualizo con Exito el PacienteContacto" });
+            else
+            {
+                var Pacientecontacto = await _service.FindAsync(Id);
+
+                if (Pacientecontacto == null)
+                {
+                    response = new { Titulo = "Algo salio mal", Mensaje = "No existe contacto de paciente con id " + Id, Codigo = HttpStatusCode.NotFound };
+                }
+                else
+                {
+                    bool updated = await _service.UpdateAsync(Id, pacienteContacto);
+
+                    if (!updated)
+                    {
+                        response = new { Titulo = "Algo salió mal!", Mensaje = "No fue posible actualizar el contacto del paciente", Codigo = HttpStatusCode.NoContent };
+                    }
+                }
+
+            }
+
+            var updateResponse = new GenericResponse(response.Codigo, response.Titulo, response.Mensaje);
+            return StatusCode((int)updateResponse.Codigo, updateResponse);
         }
 
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeletePacienteContacto(long Id)
         {
-            var pacienteContacto = await _service.GetAsync(e => e.Id == Id, e => e.OrderBy(e => e.Id), "");
+            var response = new { Titulo = "Bien Hecho!", Mensaje = "Se eliminó el contacto del paciente de forma correcta", Codigo = HttpStatusCode.OK };
+            var Pacientecontacto = await _service.FindAsync(Id);
 
-            if (pacienteContacto.Count < 1)
+            if (Pacientecontacto == null)
             {
-                throw new ExcepcionError(HttpStatusCode.NotFound, "No Existe", "No se encontraron PacienteContacto con este Id");
+                response = new { Titulo = "Algo salio mal", Mensaje = "No existe contacto del paciente con este id " + Id, Codigo = HttpStatusCode.NotFound };
             }
-            await _service.DeleteAsync(Id);
-            return Created("EliminarPacienteContacto", new { Codigo = HttpStatusCode.OK, Titulo = "OK", Mensaje = "Se Elimino con Exito el PacienteContacto" });
+            else
+            {
+                bool elimino = await _service.DeleteAsync(Id);
+                if (!elimino)
+                {
+                    response = new { Titulo = "Algo salió mal!", Mensaje = "No se pudo eliminar el contacto del paciente con Id " + Id, Codigo = HttpStatusCode.NoContent };
+                }
+            }
+            var updateResponse = new GenericResponse(response.Codigo, response.Titulo, response.Mensaje);
+            return StatusCode((int)updateResponse.Codigo, updateResponse);
         }
     }
 }

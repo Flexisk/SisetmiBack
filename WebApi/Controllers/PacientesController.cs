@@ -50,15 +50,15 @@ namespace WebApi.Controllers
 
             }
 
-            var Actividad = await _service.GetAsync(e => e.Id == Id, e => e.OrderBy(e => e.Id), "");
+            var Paciente = await _service.GetAsync(e => e.Id == Id, e => e.OrderBy(e => e.Id), "");
 
-            if (Actividad.Count < 1)
+            if (Paciente.Count < 1)
             {
                 response = new { Titulo = "Algo salio mal", Mensaje = "No existe pacientes con id " + Id, Codigo = HttpStatusCode.NotFound };
             }
             else
             {
-                PacientesModel = Actividad.First();
+                PacientesModel = Paciente.First();
                 response = new { Titulo = "Bien Hecho!", Mensaje = "Se obtuvo los pacientes con el Id solicitado", Codigo = HttpStatusCode.OK };
             }
 
@@ -110,7 +110,7 @@ namespace WebApi.Controllers
 
                     if (Paciente == null)
                     {
-                        response = new { Titulo = "Algo salio mal", Mensaje = "No existe actividad con id " + Id, Codigo = HttpStatusCode.NotFound };
+                        response = new { Titulo = "Algo salio mal", Mensaje = "No existe paciente con id " + Id, Codigo = HttpStatusCode.NotFound };
                     }
                     else
                     {
