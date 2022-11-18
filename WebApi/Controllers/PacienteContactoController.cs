@@ -12,17 +12,17 @@ namespace WebApi.Controllers
     [ApiController]
     public class PacienteContactoController : Controller
     {
-        private readonly IGenericService<PacienteContactoRequest> _service;
-        public PacienteContactoController(IGenericService<PacienteContactoRequest> service)
+        private readonly IGenericService<PacienteContacto> _service;
+        public PacienteContactoController(IGenericService<PacienteContacto> service)
         {
             this._service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PacienteContactoRequest>>> GetPacienteContacto()
+        public async Task<ActionResult<IEnumerable<PacienteContacto>>> GetPacienteContacto()
         {
             var response = new { Titulo = "Bien Hecho!", Mensaje = "Se encontraron contacto de paciente", Codigo = HttpStatusCode.OK };
-            IEnumerable<PacienteContactoRequest> PacientescontactoModel = null;
+            IEnumerable<PacienteContacto> PacientescontactoModel = null;
             if (!await _service.ExistsAsync(e => e.Id > 0))
             {
                 response = new { Titulo = "Algo salio mal", Mensaje = "No existe contacto de paciente", Codigo = HttpStatusCode.Accepted };
@@ -33,15 +33,15 @@ namespace WebApi.Controllers
             }
 
 
-            var listModelResponse = new ListModelResponse<PacienteContactoRequest>(response.Codigo, response.Titulo, response.Mensaje, PacientescontactoModel);
+            var listModelResponse = new ListModelResponse<PacienteContacto>(response.Codigo, response.Titulo, response.Mensaje, PacientescontactoModel);
             return StatusCode((int)listModelResponse.Codigo, listModelResponse);
         }
 
         [HttpGet("{Id}")]
-        public async Task<ActionResult<PacienteContactoRequest>> GetPacienteContacto(long Id)
+        public async Task<ActionResult<PacienteContacto>> GetPacienteContacto(long Id)
         {
             var response = new { Titulo = "", Mensaje = "", Codigo = HttpStatusCode.Accepted };
-            PacienteContactoRequest PacientescontactoModel = null;
+            PacienteContacto PacientescontactoModel = null;
             if (!await _service.ExistsAsync(e => e.Id > 0))
             {
 
@@ -62,15 +62,15 @@ namespace WebApi.Controllers
             }
 
 
-            var modelResponse = new ModelResponse<PacienteContactoRequest>(response.Codigo, response.Titulo, response.Mensaje, PacientescontactoModel);
+            var modelResponse = new ModelResponse<PacienteContacto>(response.Codigo, response.Titulo, response.Mensaje, PacientescontactoModel);
             return StatusCode((int)modelResponse.Codigo, modelResponse);
         }
 
         [HttpPost]
-        public async Task<ActionResult<PacienteContactoRequest>> PostPacienteContacto(PacienteContactoRequest pacienteContacto)
+        public async Task<ActionResult<PacienteContacto>> PostPacienteContacto(PacienteContacto pacienteContacto)
         {
             var response = new { Titulo = "Bien Hecho!", Mensaje = "Contacto de paciente creado de forma correcta", Codigo = HttpStatusCode.Created };
-            PacienteContactoRequest PacientecontactoModel = null;
+            PacienteContacto PacientecontactoModel = null;
 
 
             bool guardo = await _service.CreateAsync(pacienteContacto);
@@ -84,12 +84,12 @@ namespace WebApi.Controllers
             }
 
 
-            var modelResponse = new ModelResponse<PacienteContactoRequest>(response.Codigo, response.Titulo, response.Mensaje, PacientecontactoModel);
+            var modelResponse = new ModelResponse<PacienteContacto>(response.Codigo, response.Titulo, response.Mensaje, PacientecontactoModel);
             return StatusCode((int)modelResponse.Codigo, modelResponse);
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> PutPacienteContacto(long Id, PacienteContactoRequest pacienteContacto)
+        public async Task<IActionResult> PutPacienteContacto(long Id, PacienteContacto pacienteContacto)
         {
             var response = new { Titulo = "Bien Hecho!", Mensaje = "Se actualizó el contacto del paciente de forma correcta", Codigo = HttpStatusCode.OK };
 
