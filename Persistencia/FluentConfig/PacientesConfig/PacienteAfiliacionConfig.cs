@@ -11,7 +11,7 @@ namespace Persistencia.FluentConfig.PacientesConfig
 {
     public class PacienteAfiliacionConfig
     {
-        public PacienteAfiliacionConfig(EntityTypeBuilder<PacienteAfiliacion> entity)
+        public PacienteAfiliacionConfig(EntityTypeBuilder<PacienteAfiliacionRequest> entity)
         {
             entity.ToTable("PacienteAfiliacion")
                 .HasKey(p => p.Id);

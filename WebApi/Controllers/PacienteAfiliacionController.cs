@@ -12,17 +12,17 @@ namespace WebApi.Controllers
     [ApiController]
     public class PacienteAfiliacionController : ControllerBase
     {
-        private readonly IGenericService<PacienteAfiliacion> _service;
-        public PacienteAfiliacionController(IGenericService<PacienteAfiliacion> service)
+        private readonly IGenericService<PacienteAfiliacionRequest> _service;
+        public PacienteAfiliacionController(IGenericService<PacienteAfiliacionRequest> service)
         {
             this._service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PacienteAfiliacion>>> GetPacienteAfiliacion()
+        public async Task<ActionResult<IEnumerable<PacienteAfiliacionRequest>>> GetPacienteAfiliacion()
         {
             var response = new { Titulo = "Bien Hecho!", Mensaje = "Se encontraron afiliaciones de pacientes", Codigo = HttpStatusCode.OK };
-            IEnumerable<PacienteAfiliacion> PacientesAfiliacionModel = null;
+            IEnumerable<PacienteAfiliacionRequest> PacientesAfiliacionModel = null;
             if (!await _service.ExistsAsync(e => e.Id > 0))
             {
                 response = new { Titulo = "Algo salio mal", Mensaje = "No existen afiliaciones de pacientes", Codigo = HttpStatusCode.Accepted };
@@ -33,16 +33,16 @@ namespace WebApi.Controllers
             }
 
 
-            var listModelResponse = new ListModelResponse<PacienteAfiliacion>(response.Codigo, response.Titulo, response.Mensaje, PacientesAfiliacionModel);
+            var listModelResponse = new ListModelResponse<PacienteAfiliacionRequest>(response.Codigo, response.Titulo, response.Mensaje, PacientesAfiliacionModel);
             return StatusCode((int)listModelResponse.Codigo, listModelResponse);
 
         }
 
         [HttpGet("{Id}")]
-        public async Task<ActionResult<PacienteAfiliacion>> GetPacienteAfiliacion(long Id)
+        public async Task<ActionResult<PacienteAfiliacionRequest>> GetPacienteAfiliacion(long Id)
         {
             var response = new { Titulo = "", Mensaje = "", Codigo = HttpStatusCode.Accepted };
-            PacienteAfiliacion PacientesAfiliacionModel = null;
+            PacienteAfiliacionRequest PacientesAfiliacionModel = null;
             if (!await _service.ExistsAsync(e => e.Id > 0))
             {
 
@@ -63,15 +63,15 @@ namespace WebApi.Controllers
             }
 
 
-            var modelResponse = new ModelResponse<PacienteAfiliacion>(response.Codigo, response.Titulo, response.Mensaje, PacientesAfiliacionModel);
+            var modelResponse = new ModelResponse<PacienteAfiliacionRequest>(response.Codigo, response.Titulo, response.Mensaje, PacientesAfiliacionModel);
             return StatusCode((int)modelResponse.Codigo, modelResponse);
         }
 
         [HttpPost]
-        public async Task<ActionResult<PacienteAfiliacion>> PostPacienteAfiliacion(PacienteAfiliacion pacienteAfiliacion)
+        public async Task<ActionResult<PacienteAfiliacionRequest>> PostPacienteAfiliacion(PacienteAfiliacionRequest pacienteAfiliacion)
         {
             var response = new { Titulo = "Bien Hecho!", Mensaje = "Afiliacion de paciente creado de forma correcta", Codigo = HttpStatusCode.Created };
-            PacienteAfiliacion PacienteAfiliacionModel = null;
+            PacienteAfiliacionRequest PacienteAfiliacionModel = null;
 
 
             bool guardo = await _service.CreateAsync(pacienteAfiliacion);
@@ -85,13 +85,13 @@ namespace WebApi.Controllers
             }
 
 
-            var modelResponse = new ModelResponse<PacienteAfiliacion>(response.Codigo, response.Titulo, response.Mensaje, PacienteAfiliacionModel);
+            var modelResponse = new ModelResponse<PacienteAfiliacionRequest>(response.Codigo, response.Titulo, response.Mensaje, PacienteAfiliacionModel);
             return StatusCode((int)modelResponse.Codigo, modelResponse);
 
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> PutPacienteAfiliacion(long Id, PacienteAfiliacion pacienteAfiliacion)
+        public async Task<IActionResult> PutPacienteAfiliacion(long Id, PacienteAfiliacionRequest pacienteAfiliacion)
         {
             var response = new { Titulo = "Bien Hecho!", Mensaje = "Se actualizó el afiliacion paciente de forma correcta", Codigo = HttpStatusCode.OK };
 
