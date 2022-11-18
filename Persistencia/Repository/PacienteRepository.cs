@@ -8,73 +8,76 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dominio.Request;
 
 namespace Persistencia.Repository
 {
-//    public IGenericRepository<Paciente> _PacienteRepository { get; }
-//    public AplicationDbContext _context;
+    public class PacienteRepository :GenericRepository<Paciente>
+    {
+        public IGenericRepository<Paciente> _PacienteRepository { get; }
+        public AplicationDbContext _context;
 
-//    public ParametroRepository(ApplicationDbContext context, IGenericRepository<Paciente> parametroDetalleRepository) : base(context)
-//    {
-//        this._parametroDetalleRepository = parametroDetalleRepository;
-//        this._context = context;
-//    }
+        public PacienteRepository(AplicationDbContext context, IGenericRepository<Paciente> parametroDetalleRepository) : base(context)
+        {
+            this._PacienteRepository = parametroDetalleRepository;
+            this._context = context;
+        }
 
-//    public async Task<Boolean> ValidarExisteParametro(string codigoInterno)
-//    {
-//        return _context.Parametro.Any(p => p.VcCodigoInterno == codigoInterno);
-//    }
+        public async Task<PacienteRequest> crearPaciente(PacienteRequest pacienteRequest)
+        {
+            var registros = 0;
+            var paciente = new Paciente
+            {
+                TipoDocumentoId = pacienteRequest.TipoDocumentoId,
+                VcDocumento = pacienteRequest.VcDocumento,
+                VcPrimerNombre = pacienteRequest.VcPrimerNombre,
+                VcSegundoNombre = pacienteRequest.VcSegundoNombre,
+                VcPrimerApellido = pacienteRequest.VcPrimerApellido,
+                VcSegundoApellido = pacienteRequest.VcSegundoApellido,
+                NacionalidadId= pacienteRequest.NacionalidadId,
+                DtFechaNacimineto =pacienteRequest.DtFechaNacimineto,
+            };
+            _context.Pacientes.Add(paciente);
+            registros = await _context.SaveChangesAsync();
 
+            pacienteRequest.Id = paciente.Id;
+            var pacienteAfiliacion = new PacienteAfiliacion
+            {
+                PacienteId = paciente.Id,
+                RegimenId =pacienteRequest.RegimenId,
+                AseguradoraId = pacienteRequest.AseguradoraId,
+                VcOtraAseguradora = pacienteRequest.VcOtraAseguradora,
+                DtFechaRegistro = DateTime.Now,
+                UsuarioId =1,
+            };
 
+            _context.PacienteAfiliacion.Add(pacienteAfiliacion);
 
-//    public void insertMassiveData(ParametroRequest parametroRequest)
-//    {
-//        //insert to db
-//        using (var connection = _context.Database.GetDbConnection())
-//        {
-//            connection.Open();
+            var pacienteContacto = new PacienteContacto
+            {
+                PacienteId = paciente.Id,
+                PaisId = pacienteRequest.PaisId,
+                DepartamentoId = pacienteRequest.DepartamentoId,
+                LocalidadId = pacienteRequest.LocalidadId,
+                UpzId = pacienteRequest.UpzId,
+                BarrioId = pacienteRequest.BarrioId,
+                VcDireccionPrincipal = pacienteRequest.VcDireccionPrincipal,
+                VcDireccionSecundaria = pacienteRequest.VcDireccionSecundaria,
+                VcTelefono1 = pacienteRequest.VcTelefono1,
+                VcTelefono2 = pacienteRequest.VcTelefono2,
+                DtFechaRegistro = DateTime.Now,
+                UsuarioId = 1,
+            };
 
-
-//            //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [ParametroDetalle] ON");
-//            //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [Parametro] ON");
-
-
-
-//            using (SqlTransaction transaction = (SqlTransaction)connection.BeginTransaction())
-//            {
-//                using (SqlBulkCopy bulkCopy = new SqlBulkCopy((SqlConnection)connection, SqlBulkCopyOptions.Default, transaction))
-//                {
-
-//                    try
-//                    {
-
-
-
-//                        bulkCopy.DestinationTableName = "Parametro";
-//                        bulkCopy.WriteToServer(parametroRequest.Parametros);
-
-//                        bulkCopy.DestinationTableName = "ParametroDetalle";
-//                        bulkCopy.WriteToServer(parametroRequest.ParametroDetalles);
-
-
-
-//                        transaction.Commit();
-//                    }
-//                    catch (Exception ex)
-//                    {
-//                        transaction.Rollback();
-//                        connection.Close();
-//                        throw;
-//                    }
-
-//                }
-//            }
+            _context.PacienteContacto.Add(pacienteContacto);
 
 
-//            //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [ParametroDetalle] OFF");
-//            //_context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [Parametro] OFF");
 
-//        }
+            registros+=await _context.SaveChangesAsync();
 
-    //}
+
+            return pacienteRequest;
+        }
+    }
+    
 }

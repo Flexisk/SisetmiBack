@@ -10,7 +10,7 @@ namespace Dominio.Paciente
     {
         public long Id { get; set; }
         public long PacienteId { get; set; }
-        public int VcNumeroCaso { get; set; }
+        public string VcNumeroCaso { get; set; }
         public bool BComfirmadoSifilisGestacional { get; set; }
         public string? ClasificacionSifilis { get; set; }
         public DateTime DtFecha { get; set; }

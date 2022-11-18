@@ -21,6 +21,8 @@ builder.Services.AddDbContext<AplicationDbContext>(options =>
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+builder.Services.AddScoped(typeof(PacienteRepository), typeof(PacienteRepository));
+builder.Services.AddScoped(typeof(PacienteService), typeof(PacienteService));
 
 builder.Services.AddCors(opt => {
 opt.AddPolicy(name: myAllowSpecificOrigins,

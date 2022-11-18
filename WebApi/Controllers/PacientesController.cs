@@ -5,6 +5,7 @@ using System.Net;
 using Aplicacion.Services;
 using Aplicacion.ManejadorErrores;
 using WebApi.Responses;
+using Dominio.Request;
 
 namespace WebApi.Controllers
 {
@@ -13,9 +14,11 @@ namespace WebApi.Controllers
     public class PacientesController : ControllerBase
     {
         private readonly IGenericService<Paciente> _service;
-        public PacientesController(IGenericService<Paciente> service)
+        private readonly PacienteService _pacienteService;
+        public PacientesController(IGenericService<Paciente> service, PacienteService pacienteService)
         {
             this._service = service;
+            this._pacienteService = pacienteService;
         }
 
         [HttpGet]
@@ -68,26 +71,23 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Paciente>> PostPaciente(Paciente pacientes)
+        public async Task<ActionResult<PacienteRequest>> PostPaciente(PacienteRequest pacienteRequest)
         {
 
-                var response = new { Titulo = "Bien Hecho!", Mensaje = "Paciente creado de forma correcta", Codigo = HttpStatusCode.Created };
-                Paciente PacienteModel = null;
+            var response = new { Titulo = "Bien Hecho!", Mensaje = "Paciente creado de forma correcta", Codigo = HttpStatusCode.Created };
+            PacienteRequest PacienteModel = null;
 
 
-                bool guardo = await _service.CreateAsync(pacientes);
-                if (!guardo)
-                {
-                    response = new { Titulo = "Algo salio mal", Mensaje = "No se puedo guardar el paciente", Codigo = HttpStatusCode.BadRequest };
-                }
-                else
-                {
-                    PacienteModel = pacientes;
-                }
+            PacienteModel = await _pacienteService.crearPaciente(pacienteRequest);
+            if (PacienteModel.Id > 0)
+            {
+                response = new { Titulo = "Algo salio mal", Mensaje = "No se puedo guardar el paciente", Codigo = HttpStatusCode.BadRequest };
+            }
+                
 
 
-                var modelResponse = new ModelResponse<Paciente>(response.Codigo, response.Titulo, response.Mensaje, PacienteModel);
-                return StatusCode((int)modelResponse.Codigo, modelResponse);
+            var modelResponse = new ModelResponse<PacienteRequest>(response.Codigo, response.Titulo, response.Mensaje, PacienteModel);
+            return StatusCode((int)modelResponse.Codigo, modelResponse);
 
         }
 

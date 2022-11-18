@@ -9,7 +9,7 @@
         public string? VcSegundoNombre { get; set; }
         public string? VcPrimerApellido { get; set; }
         public string? VcSegundoApellido { get; set; }
-        public long Nacionalidad { get; set; }
+        public long NacionalidadId { get; set; }
         public DateTime DtFechaNacimineto { get; set; }
 
         public virtual ICollection <PacienteAfiliacion>? PacienteAfiliacion { get; set; }

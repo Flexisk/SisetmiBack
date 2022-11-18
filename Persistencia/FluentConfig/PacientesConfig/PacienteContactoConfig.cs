@@ -25,14 +25,14 @@ namespace Persistencia.FluentConfig.PacientesConfig
 
             entity.Property(p => p.DtFechaRegistro).IsRequired().HasMaxLength(20);
             entity.Property(p => p.UsuarioId).IsRequired().HasMaxLength(20);
-            entity.Property(p => p.PaisId).IsRequired().HasMaxLength(50);
+            entity.Property(p => p.PaisId).IsRequired();
             entity.Property(p => p.DepartamentoId).IsRequired().HasMaxLength(100);
             entity.Property(p => p.LocalidadId).IsRequired().HasMaxLength(100);
             entity.Property(p => p.BarrioId).IsRequired().HasMaxLength(50);
             entity.Property(p => p.VcDireccionPrincipal).IsRequired().HasMaxLength(200);
             entity.Property(p => p.VcDireccionSecundaria).IsRequired(false).HasMaxLength(200);
-            entity.Property(p => p.VcTelefono1).IsRequired().HasMaxLength(50);
-            entity.Property(p => p.VcTelefono2).IsRequired(false).HasMaxLength(50);
+            entity.Property(p => p.VcTelefono1).IsRequired().HasMaxLength(20);
+            entity.Property(p => p.VcTelefono2).IsRequired(false).HasMaxLength(20);
 
         }
     }

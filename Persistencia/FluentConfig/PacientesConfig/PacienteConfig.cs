@@ -18,7 +18,7 @@ namespace Persistencia.FluentConfig.PacientesConfig
             entity.Property(p => p.VcSegundoNombre).IsRequired(false).HasMaxLength(150);
             entity.Property(p => p.VcPrimerApellido).IsRequired().HasMaxLength(150);
             entity.Property(p => p.VcSegundoApellido).IsRequired(false).HasMaxLength(150);
-            entity.Property(p => p.Nacionalidad).IsRequired().HasMaxLength(100);
+            entity.Property(p => p.NacionalidadId).IsRequired().HasMaxLength(100);
             entity.Property(p => p.DtFechaNacimineto).IsRequired().HasMaxLength(50);
 
         }

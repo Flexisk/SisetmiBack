@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistencia.Migrations
 {
-    public partial class FirtsMigration : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,7 @@ namespace Persistencia.Migrations
                     VcSegundoNombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     VcPrimerApellido = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     VcSegundoApellido = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    Nacionalidad = table.Column<long>(type: "bigint", maxLength: 100, nullable: false),
+                    NacionalidadId = table.Column<long>(type: "bigint", maxLength: 100, nullable: false),
                     DtFechaNacimineto = table.Column<DateTime>(type: "datetime2", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -60,7 +60,7 @@ namespace Persistencia.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PacienteId = table.Column<long>(type: "bigint", nullable: false),
-                    VcNumeroCaso = table.Column<int>(type: "int", maxLength: 20, nullable: false),
+                    VcNumeroCaso = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     BComfirmadoSifilisGestacional = table.Column<bool>(type: "bit", maxLength: 20, nullable: false),
                     ClasificacionSifilis = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     DtFecha = table.Column<DateTime>(type: "datetime2", maxLength: 20, nullable: false)
@@ -85,15 +85,15 @@ namespace Persistencia.Migrations
                     PacienteId = table.Column<long>(type: "bigint", nullable: false),
                     DtFechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioId = table.Column<long>(type: "bigint", nullable: false),
-                    PaisId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaisId = table.Column<long>(type: "bigint", nullable: true),
                     DepartamentoId = table.Column<long>(type: "bigint", nullable: false),
                     LocalidadId = table.Column<long>(type: "bigint", nullable: false),
                     UpzId = table.Column<long>(type: "bigint", nullable: false),
                     BarrioId = table.Column<long>(type: "bigint", nullable: false),
                     VcDireccionPrincipal = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VcDireccionSecundaria = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VcTelefono1 = table.Column<int>(type: "int", nullable: false),
-                    VcTelefono2 = table.Column<int>(type: "int", nullable: false)
+                    VcTelefono1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VcTelefono2 = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

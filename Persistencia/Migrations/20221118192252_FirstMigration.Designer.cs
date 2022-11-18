@@ -12,8 +12,8 @@ using Persistencia.Context;
 namespace Persistencia.Migrations
 {
     [DbContext(typeof(AplicationDbContext))]
-    [Migration("20221115192028_FirtsMigration")]
-    partial class FirtsMigration
+    [Migration("20221118192252_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,7 @@ namespace Persistencia.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("Nacionalidad")
+                    b.Property<long>("NacionalidadId")
                         .HasMaxLength(100)
                         .HasColumnType("bigint");
 
@@ -128,9 +128,10 @@ namespace Persistencia.Migrations
                     b.Property<long>("PacienteId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("VcNumeroCaso")
+                    b.Property<string>("VcNumeroCaso")
+                        .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -162,8 +163,8 @@ namespace Persistencia.Migrations
                     b.Property<long>("PacienteId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("PaisId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("PaisId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("UpzId")
                         .HasColumnType("bigint");
@@ -177,11 +178,11 @@ namespace Persistencia.Migrations
                     b.Property<string>("VcDireccionSecundaria")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VcTelefono1")
-                        .HasColumnType("int");
+                    b.Property<string>("VcTelefono1")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VcTelefono2")
-                        .HasColumnType("int");
+                    b.Property<string>("VcTelefono2")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
