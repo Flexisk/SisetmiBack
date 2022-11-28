@@ -8,7 +8,7 @@
         public long UsuarioId { get; set; } 
         public long RegimenId { get; set; }
         public long AseguradoraId { get; set; }
-        public string? VcOtraAseguradora { get; set; }
+        public String? VcOtraAseguradora { get; set; }
         public Paciente? Paciente { get; set; }
     }
 }

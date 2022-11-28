@@ -29,8 +29,5 @@ namespace Persistencia.Context
         public DbSet<PacienteDiagnosticoPruebaTreponemica> PacienteDiagnosticoPruebaTreponemica { get; set; }
         public DbSet<PacienteCaso> PacienteCaso { get; set; }
 
-
-
-
     }
 }

@@ -23,11 +23,13 @@ namespace Dominio.Request
         public long UsuarioId { get; set; }
 
         //Datos de afiliación
+        public long PacienteIdAfiliacion { get; set; }
         public long RegimenId { get; set; }
         public long AseguradoraId { get; set; }
         public string? VcOtraAseguradora { get; set; }
 
         //Datos de Contacto
+        public long PacienteId { get; set; }
         public long PaisId { get; set; }
         public long DepartamentoId { get; set; }
         public long LocalidadId { get; set; }

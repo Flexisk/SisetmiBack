@@ -1,4 +1,5 @@
-﻿using Dominio.Request;
+﻿using Dominio.Mapper;
+using Dominio.Request;
 using Persistencia.Repository;
 using System;
 using System.Collections.Generic;
@@ -21,5 +22,14 @@ namespace Aplicacion.Services
         {
             return await _pacienteRepository.crearPaciente(pacienteRequest);
         }
+        public PacienteRequest getPacienteConsultar(long TipoDocumentoId, string VcDocumento)
+        {
+            return _pacienteRepository.getPacienteConsultar(TipoDocumentoId, VcDocumento);
+        }
+
+        //public PacienteRequest getPacienteConsultarContacto(long PacienteId)
+        //{
+        //    return _pacienteRepository.getPacienteConsultarContacto(PacienteId);
+        //}
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Aplicacion.ManejadorErrores;
 using Aplicacion.Services;
 using Dominio.Paciente;
+using Dominio.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -13,6 +14,7 @@ namespace WebApi.Controllers
     public class PacienteContactoController : Controller
     {
         private readonly IGenericService<PacienteContacto> _service;
+        private readonly PacienteService _pacienteService;
         public PacienteContactoController(IGenericService<PacienteContacto> service)
         {
             this._service = service;
@@ -65,6 +67,24 @@ namespace WebApi.Controllers
             var modelResponse = new ModelResponse<PacienteContacto>(response.Codigo, response.Titulo, response.Mensaje, PacientescontactoModel);
             return StatusCode((int)modelResponse.Codigo, modelResponse);
         }
+
+        //[HttpGet("{PacienteId}")]
+        //public async Task<ActionResult<PacienteRequest>> getPacienteConsultarContacto(long PacienteId)
+        //{
+        //    var response = new { Titulo = "", Mensaje = "", Codigo = HttpStatusCode.Accepted };
+
+        //    var Pacienterequest = _pacienteService.getPacienteConsultarContacto(PacienteId);
+
+        //    if (!await _service.ExistsAsync(e => e.PacienteId > 0))
+        //    {
+
+        //        response = new { Titulo = "Ok", Mensaje = "Se encontro el paciente", Codigo = HttpStatusCode.BadRequest };
+
+        //    }
+
+        //    var modelResponse = new ModelResponse<PacienteRequest>(response.Codigo, response.Titulo, response.Mensaje, Pacienterequest);
+        //    return StatusCode((int)modelResponse.Codigo, modelResponse);
+        //}
 
         [HttpPost]
         public async Task<ActionResult<PacienteContacto>> PostPacienteContacto(PacienteContacto pacienteContacto)

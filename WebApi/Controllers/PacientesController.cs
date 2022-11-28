@@ -70,6 +70,25 @@ namespace WebApi.Controllers
             return StatusCode((int)modelResponse.Codigo, modelResponse);
         }
 
+
+        [HttpGet("{TipoDocumentoId}/{VcDocumento}")]
+        public async Task<ActionResult<PacienteRequest>> getPacienteConsultar(long TipoDocumentoId, string VcDocumento)
+        {
+            var response = new { Titulo = "", Mensaje = "", Codigo = HttpStatusCode.Accepted };
+
+            var Pacienterequest = _pacienteService.getPacienteConsultar(TipoDocumentoId, VcDocumento);
+
+            if (!await _service.ExistsAsync(e => e.VcDocumento == null))
+            {
+
+                response = new { Titulo = "Ok", Mensaje = "Se encontro el paciente", Codigo = HttpStatusCode.BadRequest };
+
+            }
+
+            var modelResponse = new ModelResponse<PacienteRequest>(response.Codigo, response.Titulo, response.Mensaje, Pacienterequest);
+            return StatusCode((int)modelResponse.Codigo, modelResponse);
+        }
+
         [HttpPost]
         public async Task<ActionResult<PacienteRequest>> PostPaciente(PacienteRequest pacienteRequest)
         {
