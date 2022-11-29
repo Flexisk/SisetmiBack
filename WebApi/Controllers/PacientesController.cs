@@ -98,7 +98,7 @@ namespace WebApi.Controllers
 
 
             PacienteModel = await _pacienteService.crearPaciente(pacienteRequest);
-            if (PacienteModel.Id > 0)
+            if (PacienteModel.Id < 0)
             {
                 response = new { Titulo = "Algo salio mal", Mensaje = "No se puedo guardar el paciente", Codigo = HttpStatusCode.BadRequest };
             }
