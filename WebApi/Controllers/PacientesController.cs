@@ -71,7 +71,7 @@ namespace WebApi.Controllers
         }
 
 
-        [HttpGet("{TipoDocumentoId}/{VcDocumento}")]
+        /*[HttpGet("{TipoDocumentoId}/{VcDocumento}")]
         public async Task<ActionResult<PacienteRequest>> getPacienteConsultar(long TipoDocumentoId, string VcDocumento)
         {
             var response = new { Titulo = "", Mensaje = "", Codigo = HttpStatusCode.Accepted };
@@ -87,7 +87,7 @@ namespace WebApi.Controllers
 
             var modelResponse = new ModelResponse<PacienteRequest>(response.Codigo, response.Titulo, response.Mensaje, Pacienterequest);
             return StatusCode((int)modelResponse.Codigo, modelResponse);
-        }
+        }*/
 
         [HttpPost]
         public async Task<ActionResult<PacienteRequest>> PostPaciente(PacienteRequest pacienteRequest)

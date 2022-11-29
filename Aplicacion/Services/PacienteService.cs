@@ -22,10 +22,11 @@ namespace Aplicacion.Services
         {
             return await _pacienteRepository.crearPaciente(pacienteRequest);
         }
-        public PacienteRequest getPacienteConsultar(long TipoDocumentoId, string VcDocumento)
+        
+        /*public PacienteRequest getPacienteConsultar(long TipoDocumentoId, string VcDocumento)
         {
             return _pacienteRepository.getPacienteConsultar(TipoDocumentoId, VcDocumento);
-        }
+        }*/
 
         //public PacienteRequest getPacienteConsultarContacto(long PacienteId)
         //{
